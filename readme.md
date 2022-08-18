@@ -10,9 +10,9 @@ SLY
 
 Sources:
 
-https://school.geekwall.in/p/Byz8Rg0GX
-https://llvmlite.readthedocs.io/en/latest/
-https://sly.readthedocs.io/en/latest/sly.html
-https://groups.seas.harvard.edu/courses/cs153/2019fa/llvmlite.html
-https://buildmedia.readthedocs.org/media/pdf/llvmlite/latest/llvmlite.pdf
+1. https://school.geekwall.in/p/Byz8Rg0GX
+2. https://llvmlite.readthedocs.io/en/latest/
+3. https://sly.readthedocs.io/en/latest/sly.html
+4. https://groups.seas.harvard.edu/courses/cs153/2019fa/llvmlite.html
+5. https://buildmedia.readthedocs.org/media/pdf/llvmlite/latest/llvmlite.pdf
 
