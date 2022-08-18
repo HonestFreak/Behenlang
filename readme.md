@@ -35,6 +35,29 @@ This will generate a .ll intermediate code file in the same folder where code is
 
 ### Documentation:
 
+#### General
+
+<code>kaam</code> is used to define a function. One must define <code>main</code> function in the project. Example :
+```sh
+kaam int main() {
+    # code goes here
+}
+```
+
+<code>behen</code> is used to initialize any statement.
+
+#### Print
+
+<code>behen bolo(<strings here>)</code> is used to print the strings :
+```sh
+kaam int main() {
+
+    didi bolo("Namste Duniya \n")
+    behen bolo("Hello World")       #this is comment
+
+    behen bhejo 0
+}
+```
 
 
 
