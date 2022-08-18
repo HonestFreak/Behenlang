@@ -60,19 +60,67 @@ kaam int main() {
 }
 ```
   
-#### Print
+#### Defining Variables
 
-<code>behen bolo(<strings here>)</code> or <code>didi bolo(<strings here>)</code> is used to print the strings :
 ```sh
 kaam int main() {
 
-    didi bolo("Namste Duniya \n")
-    behen bolo("Hello World")       #this is comment
-
+    behen x=5
+    behen y=9.0
+    
     behen bhejo 0
 }
 ```
 
+#### Conditional Statements
+
+```sh
+kaam int main() {
+
+    behen num1 = 18
+    behen rem = num1 % 2
+    behen agar rem == 0{
+        behen bolo('Even')
+    } 
+    warna{
+        behen bolo('Odd')
+    }
+
+    behen bhejo 0
+}
+
+```
+  
+#### Iterations
+
+```sh
+kaam int main(){
+    behen i = 0
+    jabtak i < 10
+    {
+        didi bolo('Hello ')
+        didi i = i+1
+    }
+   didi bhejo 0
+    }
+
+```
+                 
+#### Calling Functions
+
+```sh
+kaam int hello() {
+    behen bolo("Ye hai hello function\n")
+    behen bhejo 0
+}
+
+kaam int main(){
+    hello()
+    behen bolo("Ye hai main fun")
+    behen bhejo 0
+}
+
+```
 
 
 
@@ -82,7 +130,7 @@ kaam int main() {
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Dont forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -99,13 +147,6 @@ Don't forget to give the project a star! Thanks again!
 3. https://sly.readthedocs.io/en/latest/sly.html
 4. https://groups.seas.harvard.edu/courses/cs153/2019fa/llvmlite.html
 5. https://buildmedia.readthedocs.org/media/pdf/llvmlite/latest/llvmlite.pdf
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
