@@ -1,0 +1,11 @@
+kaam int main() {
+
+   # finding factorial of n
+   behen n = 10
+   behen k = 1
+   jabtak n>1{
+        behen k=k*n
+        behen n=n-1
+    }
+    behen bhejo k
+}
