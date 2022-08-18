@@ -23,10 +23,12 @@ You need llvmlite and sly modules to run the project.
 
 ## Usage
 
+### Compiling the code
+
 Extention for behenlang is .behen , to compile .behen files use
-'''sh
+```sh
 python run.py <filename.behen>
-'''
+```
 
 This will generate a .ll intermediate code file in the same folder where code is present and output the result too.
 
@@ -65,17 +67,6 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
