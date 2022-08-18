@@ -1,0 +1,19 @@
+kaam int hello() {
+
+    behen age = 18.1
+    didi agar age == 18.1{
+        didi bolo('wow you are 18\n')
+    } 
+    warna{
+        didi bolo('i guess you are not 18\n')
+    }
+
+    behen bhejo 3
+}
+
+kaam int main() {
+
+    didi bolo("hi\n")
+    hello()
+    behen bhejo 0
+}
