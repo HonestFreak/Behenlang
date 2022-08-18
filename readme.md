@@ -7,14 +7,14 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+
 
 Behenlang is a toy programming langauge inspired from Bhailang.
 
-###Documentation:
+### Documentation:
 
 
-###Sources:
+### Sources:
 
 1. https://school.geekwall.in/p/Byz8Rg0GX
 2. https://llvmlite.readthedocs.io/en/latest/
