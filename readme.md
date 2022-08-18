@@ -5,8 +5,8 @@
 Behenlang is a toy programming langauge inspired from Bhailang.
 
 Requirments:
-LLVMlite
-SLY
+1. LLVMlite
+2. SLY
 
 Sources:
 
