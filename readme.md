@@ -2,25 +2,10 @@
 
 ![image](https://user-images.githubusercontent.com/34571056/185396634-a3115f2b-1a93-4223-961c-512170673c2a.png)
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
 
 Behenlang is a toy programming langauge inspired from Bhailang.
 
-### Documentation:
-
-
-### Sources:
-
-1. https://school.geekwall.in/p/Byz8Rg0GX
-2. https://llvmlite.readthedocs.io/en/latest/
-3. https://sly.readthedocs.io/en/latest/sly.html
-4. https://groups.seas.harvard.edu/courses/cs153/2019fa/llvmlite.html
-5. https://buildmedia.readthedocs.org/media/pdf/llvmlite/latest/llvmlite.pdf
+## Geting Started
 
 
 ### Prerequisites
@@ -36,39 +21,23 @@ You need llvmlite and sly modules to run the project.
   pip install sly
   ```
 
-### Installation
-
-
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Extention for behenlang is .behen , to compile .behen files use
+'''sh
+python run.py <filename.behen>
+'''
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This will generate a .ll intermediate code file in the same folder where code is present and output the result too.
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Documentation:
 
 
 
-<!-- CONTRIBUTING -->
+
+
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -84,7 +53,13 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Sources:
 
+1. https://school.geekwall.in/p/Byz8Rg0GX
+2. https://llvmlite.readthedocs.io/en/latest/
+3. https://sly.readthedocs.io/en/latest/sly.html
+4. https://groups.seas.harvard.edu/courses/cs153/2019fa/llvmlite.html
+5. https://buildmedia.readthedocs.org/media/pdf/llvmlite/latest/llvmlite.pdf
 
 <!-- LICENSE -->
 ## License
