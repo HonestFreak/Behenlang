@@ -41,14 +41,28 @@ This will generate a .ll intermediate code file in the same folder where code is
 ```sh
 kaam int main() {
     # code goes here
+    behen bhejo 0     #similar to return
 }
 ```
 
-<code>behen</code> is used to initialize any statement.
+<code>behen</code> or <code>didi</code> is used to initialize any statement.
 
 #### Print
 
-<code>behen bolo(<strings here>)</code> is used to print the strings :
+<code>behen bolo(<strings here>)</code> or <code>didi bolo(<strings here>)</code> is used to print the strings :
+```sh
+kaam int main() {
+
+    didi bolo("Namste Duniya \n")
+    behen bolo("Hello World")       #this is comment
+
+    behen bhejo 0
+}
+```
+  
+#### Print
+
+<code>behen bolo(<strings here>)</code> or <code>didi bolo(<strings here>)</code> is used to print the strings :
 ```sh
 kaam int main() {
 
