@@ -15,7 +15,7 @@ class lexer(Lexer):
         PLUS,   MINUS,      DIVIDE,     TIMES,      MOD,
         LPAREN, RPAREN,     LBRACE,     RBRACE, 
         LT,     LE,     GT,     GE,     EQ,     EQEQ,       NE, 
-        IF,     ELSE,   WHILE,   BREAK,  CONTINUE,
+        IF,     ELSE,   WHILE,  
         DEF,    RETURN,
         COLON,  COMMA,  
         AND,    OR
@@ -46,8 +46,6 @@ class lexer(Lexer):
     KEYWORDS['kaam'] = DEF
     KEYWORDS['bhejo'] = RETURN
     KEYWORDS['jabtak'] = WHILE
-    KEYWORDS['ruko'] = BREAK
-    KEYWORDS['chalo'] = CONTINUE
     KEYWORDS['aur'] = AND
     KEYWORDS['ya'] = OR
     
