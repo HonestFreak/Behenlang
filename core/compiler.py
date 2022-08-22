@@ -18,16 +18,13 @@ class Compiler:
 
         self.module = ir.Module('main')
         
-        # Defining builtin function (printf)
-
+       
         func = ir.Function(self.module, 
                             ir.FunctionType(self.type_map['int'], [ir.IntType(8).as_pointer()], var_arg=True), 
                             'printf')
 
-        # This helps to keep track of Defined Variabled
         self.variables = {'printf':(func,ir.IntType(32))}
         
-        # Current Builder
         self.builder = None
         
         self.i = 0
@@ -82,7 +79,7 @@ class Compiler:
 
         params_ptr = []
         
-        # Storing the pointers of each parameter
+        # Pointers 
         for i,typ in enumerate(params_type):
             ptr = self.builder.alloca(typ)
             self.builder.store(func.args[i],ptr)
@@ -93,21 +90,18 @@ class Compiler:
             typ = params_type[i]
             ptr = params_ptr[i]
             
-            # Add function's parameter to stored variables
+           
             self.variables[x[1]] = ptr,typ
 
-        # Adding function to variables
+        # Variables
         self.variables[name] = func,return_type
 
-        # Compile the body of the function 
         self.compile(body)
 
-        # Removing the function's variables so it cannot be accessed by other functions
         self.variables = previous_variables
         self.variables[name] = func,return_type
 
-        # Done with the function's builder
-        # Return to the previous builder
+        
         self.builder = previous_builder
         
     def visit_if(self,branch):
@@ -163,14 +157,11 @@ class Compiler:
         value,Type = self.visit_value(value)
 
         if not self.variables.__contains__(name):
-            # Creating a pointer for the type 'Type' : ir.Type
             ptr = self.builder.alloca(Type)
 
-            # Storing the value to the pointer
             self.builder.store(value,ptr)
 
-            # Adding the name and it's pointer to
-            # Variable map for easy retrieval
+         
             self.variables[name] = ptr,Type
         else:
             ptr,_ = self.variables[name]
@@ -231,7 +222,6 @@ class Compiler:
 
         self.builder.cbranch(test, while_loop_entry, while_loop_otherwise)
 
-        # Setting the builder position-at-start
         self.builder.position_at_start(while_loop_entry)
         self.compile(body)
         test,_ = self.visit_value(Test)
