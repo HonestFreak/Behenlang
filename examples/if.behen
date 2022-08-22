@@ -1,19 +1,20 @@
-kaam int hello() {
-
-    behen age = 18.1
-    didi agar age == 18.1{
-        didi bolo('wow you are 18\n')
+kaam int oddeven() {
+    behen pucho 'a'
+    behen n = 18
+    didi rem = n%2
+    didi agar rem == 0{
+        didi bolo('Even\n')
     } 
     warna{
-        didi bolo('i guess you are not 18\n')
+        didi bolo('Odd\n')
     }
 
-    behen bhejo 3
+    behen bhejo 0
 }
 
 kaam int main() {
 
-    didi bolo("hi\n")
-    hello()
+    didi bolo("Testing odd and even\n")
+    oddeven()
     behen bhejo 0
 }
