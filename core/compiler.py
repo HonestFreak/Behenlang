@@ -19,7 +19,7 @@ class Compiler:
         self.type_map = {
             'int':int32,   # 32-bit integer
             'float':float, # float
-            'double':DoubleType(),   # double
+            'double':DoubleType(),   # double type
             'void':void,   # Void type (for internal funcs returning no values)
             'str':ArrayType('int8',1),
         }

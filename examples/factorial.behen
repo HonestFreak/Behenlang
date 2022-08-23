@@ -8,4 +8,5 @@ kaam int main() {
         behen n=n-1
     }
     behen bhejo k
+    
 }

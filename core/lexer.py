@@ -70,7 +70,7 @@ class lexer(Lexer):
     COMMA = r','
     BOOL = r'True|False'
 
-    @_(r'#.*')          
+    @_(r'#.*')              #ignores comment '#'      
     def COMMENT(self, t):
         pass
 

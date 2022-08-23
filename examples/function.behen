@@ -1,4 +1,4 @@
-kaam int hello() {
+kaam int hello() {  #function named hello
     behen bolo("Ye hai hello function\n")
     behen bhejo 0
 }
