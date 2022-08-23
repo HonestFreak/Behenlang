@@ -1,0 +1,19 @@
+kaam int oddeven() {
+    behen n = 18
+    didi rem = n%2
+    didi agar rem == 0{
+        didi bolo('Even\n')
+    } 
+    warna{
+        didi bolo('Odd\n')
+    }
+
+    behen bhejo 0
+}
+
+kaam int main() {
+
+    didi bolo("Testing odd and even\n")
+    oddeven()
+    behen bhejo 0
+}
