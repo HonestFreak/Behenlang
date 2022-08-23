@@ -2,7 +2,8 @@ kaam int oddeven() {
     behen n = 18
     didi rem = n%2
     didi agar rem == 0{
-        didi bolo('Even\n')
+        didi bolo('Even')
+        
     } 
     warna{
         didi bolo('Odd\n')
@@ -13,7 +14,7 @@ kaam int oddeven() {
 
 kaam int main() {
 
-    didi bolo("Testing odd and even\n")
+    didi bololine("Testing odd and even")
     oddeven()
     behen bhejo 0
 }

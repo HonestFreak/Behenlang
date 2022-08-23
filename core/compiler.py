@@ -4,52 +4,72 @@ from .parser import parser
 # using llvmlite 
 # pip install llvmlite
 
-from llvmlite import ir
+from llvmlite.ir import *
 
+int32 = IntType(32)
+int8 = IntType(8)
+float = FloatType()
+void = VoidType()
 
 class Compiler:
     def __init__(self):
+        # Declaring the LLVM type objects that we want to use 
+        # in our intermediate code.  We need to declare the integer, float, void etc. 
+
         self.type_map = {
-            'bool':ir.IntType(1),
-            'int':ir.IntType(32),
-            'float':ir.FloatType(),
-            'double':ir.DoubleType(),
-            'void':ir.VoidType(),
-            'str':ir.ArrayType(ir.IntType(8),1),
+            'int':int32,   # 32-bit integer
+            'float':float, # float
+            'double':DoubleType(),   # double
+            'void':void,   # Void type (for internal funcs returning no values)
+            'str':ArrayType('int8',1),
         }
+
+       
+        # we mapped them with simple names so we can easily use them later.
+
         # defining main
-        self.module = ir.Module('main')
+        self.module = Module('module')
         
         
-        func = ir.Function(self.module, 
-                            ir.FunctionType(self.type_map['int'], [ir.IntType(8).as_pointer()], var_arg=True), 
+        func = Function(self.module, 
+                            FunctionType(int32, [int8.as_pointer()], var_arg=True), 
                             'printf')
 
-        self.variables = {'printf':(func,ir.IntType(32))}
+        
+        self.variables = {'printf':(func,int32)}
         
         self.builder = None
         
         self.i = 0
+
+    def emit_PRINT(self, source, runtime_name):
+            self.builder.call(self.runtime[runtime_name], [self.temps[source]])
+
+
+
+
+    
         
     def inc(self):
         self.i += 1
         return 1
 
-    def compile(self,ast):
-        for branch in ast:
-            # branch[0] holds the branch type (from the ast)
-            if branch[0] == 'function_call':
-                self.visit_funccall(branch)
-            elif branch[0] == 'fun_def':
-                self.visit_def(branch)
-            elif branch[0] == 'variable':
-                self.visit_assign(branch)
-            elif branch[0] == 'return':
-                self.visit_return(branch)
-            elif branch[0] == 'if_statement':
-                self.visit_if(branch)
-            elif branch[0] == 'while_statement':
-                self.visit_while(branch)
+    def compile(self,tree):
+        for nodes in tree:
+            # nodes[0] = branch type
+            
+            if nodes[0] == 'function_call':
+                self.visit_funccall(nodes)
+            elif nodes[0] == 'fun_def':
+                self.visit_def(nodes)
+            elif nodes[0] == 'variable':
+                self.visit_assign(nodes)
+            elif nodes[0] == 'return':
+                self.visit_return(nodes)
+            elif nodes[0] == 'if_statement':
+                self.visit_if(nodes)
+            elif nodes[0] == 'while_statement':
+                self.visit_while(nodes)
             
                 
     def visit_def(self,branch):
@@ -59,26 +79,24 @@ class Compiler:
         params = branch[1]['def_params']
         params = params if params[0] else []
 
-        # Keep track of the name of each parameter
+        # stores name of parameters
         params_name = [x['name'] for x in params]
         
-        # Keep track of the types of each parameter
+        # stores datatype of parameter
         params_type = [self.type_map[x['type']] for x in params]
 
-        # Functions return type
+        # return type of functs
         return_type = self.type_map[branch[1]['return']]
 
-        # Defining a funtions (return type,  parameters)
-        fnty = ir.FunctionType(return_type,params_type)
-        func = ir.Function(self.module,fnty,name=name)
-
-        # Defining function's block
+        # Defining funtions
+        fnty = FunctionType(return_type,params_type)
+        func = Function(self.module,fnty,name=name)
         block = func.append_basic_block(f'{name}_entry')
 
         previous_builder = self.builder
 
         # Current builder
-        self.builder = ir.IRBuilder(block)
+        self.builder = IRBuilder(block)
 
         params_ptr = []
         
@@ -103,17 +121,18 @@ class Compiler:
 
         self.variables = previous_variables
         self.variables[name] = func,return_type
-
-        
         self.builder = previous_builder
+
+        # defining header of functions looks like
+        # define i32 @"<function name>"(<parameters>) in ir code
+        # view an .ll to see 
         
     def visit_if(self,branch):
         orelse = branch[1]['orelse']
         body = branch[1]['body']
         test,Type = self.visit_value(branch[1]['test'])
         
-        # If there is no else block
-        if orelse == []:
+        if orelse == []:    # for if only statement
           with self.builder.if_then(test):
               self.compile(body)
         else:
@@ -123,16 +142,16 @@ class Compiler:
                   
     def visit_value(self,branch):
         if branch[0] == 'Number':
-            value,Type = branch[1]['value'],self.type_map['int']
-            return ir.Constant(Type,value),Type
+            value,Type = branch[1]['value'],int32
+            return Constant(Type,value),Type
 
         elif branch[0] == 'Int':
-            value,Type = branch[1]['value'],self.type_map['int']
-            return ir.Constant(Type,value),Type
+            value,Type = branch[1]['value'],int32
+            return Constant(Type,value),Type
 
         elif branch[0] == 'Float':
-            value,Type = branch[1]['value'],self.type_map['float']
-            return ir.Constant(Type,value),Type
+            value,Type = branch[1]['value'],float
+            return Constant(Type,value),Type
 
         elif branch[0] == 'Name':
             ptr,Type = self.variables[branch[1]['value']]  
@@ -175,20 +194,22 @@ class Compiler:
         buf = bytearray((' ' * n).encode('ascii'))
         buf[-1] = 0
         buf[:-1] = string.encode('utf8')
-        return ir.Constant(ir.ArrayType(ir.IntType(8), n), buf),ir.ArrayType(ir.IntType(8), n)
+        return Constant(ArrayType(int8, n), buf),ArrayType(IntType(8), n)
     
-    def printf(self,params,Type):
+    def printf(self,params,Type,endl):
         format = params[0]
-        params = params[1:]
-        zero = ir.Constant(ir.IntType(32),0)
+        params = params[1:] 
+        
+        zero = Constant(IntType(32),0)
         ptr = self.builder.alloca(Type)
         self.builder.store(format,ptr)
         format = ptr
         format = self.builder.gep(format, [zero, zero])
-        format = self.builder.bitcast(format, ir.IntType(8).as_pointer())
+        format = self.builder.bitcast(format, IntType(8).as_pointer())
         func,_ = self.variables['printf']
         return self.builder.call(func,[format,*params])
-    
+
+        # can observe c"<print statement>" in intermediate code file
         
 
     def visit_funccall(self,branch):
@@ -203,9 +224,11 @@ class Compiler:
                 args.append(val)
                 types.append(_)
 
-        if name=='print' or name=='Print':
-            ret = self.printf(args,types[0])
-            ret_type = self.type_map['int']
+        if name=='print':
+            endl = False
+            ret = self.printf(args,types[0],endl)
+            ret_type = int32
+
         else:
             func,ret_type = self.variables[name]
             ret = self.builder.call(func,args)
@@ -220,6 +243,9 @@ class Compiler:
         while_loop_entry = self.builder.append_basic_block("while_loop_entry"+str(self.inc()))
 
         while_loop_otherwise = self.builder.append_basic_block("while_loop_otherwise"+str(self.i))
+
+        # while_loop_entry and while_loop_otherwise are ir code keywords
+        # check loop.ll file to know more
 
         self.builder.cbranch(test, while_loop_entry, while_loop_otherwise)
 
@@ -240,8 +266,8 @@ class Compiler:
         lhs, lhs_type = self.visit_value(branch[1]['lhs'])
         rhs, rhs_type = self.visit_value(branch[1]['rhs'])
 
-        if isinstance(rhs_type,ir.FloatType) and isinstance(lhs_type,ir.FloatType):
-            Type = ir.FloatType()
+        if isinstance(rhs_type,FloatType) and isinstance(lhs_type,FloatType):
+            Type = FloatType()
             if op == '+':
                 value = self.builder.fadd(lhs,rhs)
             elif op == '*':
@@ -254,25 +280,25 @@ class Compiler:
                  value = self.builder.fsub(lhs,rhs)
             elif op == '<':
                 value = self.builder.fcmp_ordered('<',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '<=':
                 value = self.builder.fcmp_ordered('<=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '>':
                 value = self.builder.fcmp_ordered('>',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '>=':
                 value = self.builder.fcmp_ordered('>=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '!=':
                 value = self.builder.fcmp_ordered('!=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '==':
                 value = self.builder.fcmp_ordered('==',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
         
-        elif isinstance(rhs_type,ir.IntType) and isinstance(lhs_type,ir.IntType):
-            Type = ir.IntType(32)
+        elif isinstance(rhs_type,IntType) and isinstance(lhs_type,IntType):
+            Type = IntType(32)
             if op == '+':
                 value = self.builder.add(lhs,rhs)
             elif op == '*':
@@ -285,28 +311,28 @@ class Compiler:
                 value = self.builder.sub(lhs,rhs)
             elif op == '<':
                 value = self.builder.icmp_signed('<',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '<=':
                 value = self.builder.icmp_signed('<=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '>':
                 value = self.builder.icmp_signed('>',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '>=':
                 value = self.builder.icmp_signed('>=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '!=':
                 value = self.builder.icmp_signed('!=',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == '==':
                 value = self.builder.icmp_signed('==',lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == 'and':
                 value = self.builder.and_(lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             elif op == 'or':
                 value = self.builder.or_(lhs,rhs)
-                Type = ir.IntType(1)
+                Type = IntType(1)
             
                 
         return value,Type

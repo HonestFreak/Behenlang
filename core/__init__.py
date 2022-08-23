@@ -31,17 +31,15 @@ def run_code(code,name):
     engine = llvm.create_mcjit_compiler(llvm_ir_parsed, target_machine)
     engine.finalize_object()
 
-    # Run the function with name func_name. This is why it makes sense to have a 'main' function that calls other functions.
     entry = engine.get_function_address('main')
-    cfunc = CFUNCTYPE(c_int)(entry)
-
+    print("Waah didi waah !!")
     output = open(name[:-6]+'.ll','w')
     output.write(str(module))
     output.close()
 
     start_time = time()
-    result = cfunc()
+    result = CFUNCTYPE(c_int)(entry)()
     end_time = time()
 
-    print(f'\nReturns : {result}')
-    print('\nExecuted in {:f} sec'.format(end_time - start_time))
+    print(f'\nReturn Value : {result}')
+    print('\nExecution time {:f} sec'.format(end_time - start_time))

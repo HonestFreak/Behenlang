@@ -10,8 +10,8 @@ from sly import Lexer
 class lexer(Lexer):
     # Below set contains all the token names.
     tokens = {
-        BOLO,  KEYWORDS,    NUMBER,      BEHEN,
-        STRING, FLOAT, INT,
+        BOLO,  BOLOLN,      KEYWORDS,       BEHEN,
+        STRING, FLOAT,      INT,
         PLUS,   MINUS,      DIVIDE,     TIMES,      MOD,
         LPAREN, RPAREN,     LBRACE,     RBRACE, 
         LT,     LE,     GT,     GE,     EQ,     EQEQ,       NE, 
@@ -24,7 +24,7 @@ class lexer(Lexer):
 
     literals = {',',';'}
 
-    # Supports int , float and number(binary , hex , octa etc.) data type
+    # Supports int , float data ty
     FLOAT = r'(((\d+\.\d*)|(\.\d+))([eE][+-]?\d+)?)|(\d+[eE][+-]?\d+)'
     INT = r'(0x[0-9ABCDEF]+)|(0b[01]+)|(0o[0-5]+)|\d+'
 
@@ -40,6 +40,7 @@ class lexer(Lexer):
     KEYWORDS['behen'] = BEHEN
     KEYWORDS['didi'] = BEHEN
     KEYWORDS['bolo'] = BOLO
+    KEYWORDS['bololine'] = BOLOLN
     KEYWORDS['agar'] = AGAR
     KEYWORDS['warna'] = WARNA
     KEYWORDS['kaam'] = KAAM

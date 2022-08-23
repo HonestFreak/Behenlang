@@ -42,6 +42,13 @@ class parser(Parser):
 
     @_('BEHEN BOLO LPAREN params RPAREN')
     def statement(self,p):
+        #print(p.params)
+        return ('function_call',{'params':p.params,'name':'print'})
+        
+
+    @_('BEHEN BOLOLN LPAREN params RPAREN')
+    def statement(self,p):
+        p.params[0][1]['value'] = p.params[0][1]['value'][:-1] + '\n%60'
         return ('function_call',{'params':p.params,'name':'print'})
         
     @_('KAAM KEYWORDS KEYWORDS LPAREN def_params RPAREN  LBRACE statements RBRACE')
@@ -54,7 +61,7 @@ class parser(Parser):
 
     @_('BEHEN AGAR expr LBRACE statements RBRACE WARNA LBRACE statements RBRACE')
     def statement(self,p):
-        return ('If',{'body':p.statements0,'test':p.expr,'orelse':p.statements1})
+        return ('if_statement',{'body':p.statements0,'test':p.expr,'orelse':p.statements1})
 
 
     @_('BEHEN JABTAK expr LBRACE statements RBRACE')

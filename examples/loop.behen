@@ -1,9 +1,12 @@
 kaam int main(){
     behen i = 0
-    jabtak i < 10
+    behen jabtak ( i < 10 )
     {
         didi bolo('Hello ')
-        didi i = i+1
+        didi i = i+2
     }
-   didi bhejo 0
+
+
+
+   didi bhejo i
     }

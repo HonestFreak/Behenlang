@@ -1,0 +1,7 @@
+kaam int main(){
+    didi bololine("hello")
+    didi bololine("this is new line")
+    didi bololine("this is 3rd line")
+
+    didi bhejo 0
+}
