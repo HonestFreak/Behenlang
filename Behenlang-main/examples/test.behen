@@ -1,0 +1,7 @@
+kaam int main() {
+
+    didi bolo("Namste Duniya \n" )
+    behen bolo("Hello World")       # this is comment
+    
+    behen bhejo "0"
+}
