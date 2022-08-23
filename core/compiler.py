@@ -45,10 +45,6 @@ class Compiler:
     def emit_PRINT(self, source, runtime_name):
             self.builder.call(self.runtime[runtime_name], [self.temps[source]])
 
-
-
-
-    
         
     def inc(self):
         self.i += 1

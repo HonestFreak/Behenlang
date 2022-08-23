@@ -68,6 +68,7 @@ class lexer(Lexer):
     MOD = r'%'
     COLON = r':'
     COMMA = r','
+    BOOL = r'True|False'
 
     @_(r'#.*')          
     def COMMENT(self, t):
