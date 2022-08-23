@@ -1,9 +1,0 @@
-kaam int main(){
-    behen i = 0
-    jabtak i < 10
-    {
-        didi bolo('Hello ')
-        didi i = i+1
-    }
-   didi bhejo 0
-    }
